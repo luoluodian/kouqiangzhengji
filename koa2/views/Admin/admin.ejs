@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>口腔正畸过程管理系统登录</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+
+<body>
+<div class="page login-page">
+    <div class="container d-flex align-items-center">
+        <div class="form-holder has-shadow">
+            <div class="row">
+                <!-- Form Panel    -->
+                <div class="col-lg-6 bg-white">
+                    <div class="form d-flex align-items-center">
+                        <div class="content">
+                            <form class="form-validate" >
+                                <div  id="imageLoad"  style="display:none;">
+                                    <div class="form-group text-center" >
+                                        <img src="img/avatar-3.jpg" style="height: 200px ;width: 200px" alt="person" class="img-fluid rounded-circle" id="img-picture">
+                                        <input type="file" name="uploadFile" id="uploadFile" multiple="multiple" style=" display: none;" onchange="showImg(this)">
+                                        </br>
+                                        <button type="button" id="btn" class="btn btn-primary" style="margin-top: 20px">保存</button>
+                                    </div>
+                                </div>
+
+                                <div tyle="display:'';" id="imageLoad1">
+                                    <div class="form-group">
+                                        <input type="text" id="register-username" class="form-control" placeholder="请输入用户名"  aria-describedby="addon-wrapping">
+                                        <small id="span-username-info" class="form-text text-muted"></small>
+                                    </div>
+                                    <div class="form-group"><form id="email1">
+                                            <input id="register-email" type="email" class="form-control" placeholder="请输入邮箱"  aria-describedby="addon-wrapping"></form>
+                                        <small id="register-email-info" class="form-text text-muted"></small>
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-control" id="register-sex">
+                                            <option value="0">男</option>
+                                            <option value="1">女</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="register-birth" type="date" class="form-control"  aria-describedby="addon-wrapping">
+                                        <small id="register-birth-info" class="form-text text-muted"></small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pro">个人介绍</label>
+                                        <textarea class="form-control" id="pro" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="register-password" type="password" class="form-control" placeholder="请输入密码"  aria-describedby="addon-wrapping">
+                                        <small id="register-password-info" class="form-text text-muted"></small>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="register-repassword" type="password" class="form-control" placeholder="请再次输入密码"  aria-describedby="addon-wrapping">
+                                        <small id="register-repassword-info" class="form-text text-muted"></small>
+                                    </div>
+                                    <div class="form-group ">
+                                        <button id="regidter"  name="registerSubmit" class="btn btn-primary">下一步</button><a href="/login" class="signup float-right">登录</a></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript files-->
+<%- include ../public/js.ejs %>
+
+<script>
+
+    //更改点击样式
+    $('#img-picture').click(function(){
+        $('#uploadFile').click(
+        );
+    });
+
+    //显示图片
+    $('#uploadFile').on('change',function(){
+        var c_showImg =this.files[0];
+        var url = null;
+        if(window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(c_showImg);
+        } else if(window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(c_showImg);
+        } else if(window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(c_showImg);
+        }
+        $('#img-picture').attr('src', url); //图片链接（base64）
+    })
+
+    var $inputUserName = $('#register-username')
+    var $inputUserEmail = $('#register-email')
+    var $inputUserSex = $('#register-sex')
+    var $inputUseBirth = $('#register-birth')
+    var $inputUserPassword = $('#register-password')
+    var $inputUserrePassword = $('#register-repassword')
+    var $inputuserPro=$('#pro')
+
+
+    var $inputUserNameInfo = $('#register-username-info')
+    var $inputUserEmailInfo = $('#register-email-info')
+    var $inputUseBirthInfo = $('#register-birth-info')
+    var $inputUserPasswordInfo = $('#register-password-info')
+    var $inputUserrePasswordInfo = $('#register-repassword-info')
+
+    var userEmailTimeoutId
+    var passwordTimeoutId
+    var isPasswordSame = false // 默认两次密码不一致
+    var isUserEmailExist = true // 默认用户名已存在
+
+    var $avatar=$('#avatar')
+
+
+    //邮箱是否存在
+    $inputUserEmail.on('input',function () {
+        if(userEmailTimeoutId){
+            clearTimeout(userEmailTimeoutId)
+        }
+        userEmailTimeoutId=setTimeout(function () {
+            var email=$inputUserEmail.val()
+            $.post("/api/Admin/isExist",{
+                email
+            },function (data,err) {
+                $inputUserEmailInfo.show()
+                console.log(data.errno);
+                if (data.errno===0) {
+                    $inputUserEmailInfo.text('邮箱可用')
+                    isUserEmailExist = true
+                }else {
+                    $inputUserEmailInfo.text('邮箱已注册')
+                    isUserEmailExist = false
+                }
+            })
+        },500)
+    })
+
+    //验证密码是否一致
+    $inputUserrePassword.on('input', function () {
+        // 做一个简单的防抖
+        if (passwordTimeoutId) {
+            clearTimeout(passwordTimeoutId)
+        }
+        passwordTimeoutId = setTimeout(function() {
+            var password = $inputUserPassword.val()
+            var passwordRepeat = $inputUserrePassword.val()
+            $inputUserrePasswordInfo.show()
+            if (passwordRepeat === password) {
+                isPasswordSame = true
+            } else {
+                $inputUserrePasswordInfo.text('两次密码不一致！')
+                isPasswordSame = false
+            }
+        }, 500)
+    })
+
+
+
+    $('#regidter').click(function(e) {
+        // 阻止默认的提交表单行为
+        e.preventDefault()
+        // 验证
+        var UserName = $('#register-username').val()
+        var UserEmail = $('#register-email').val()
+        var UserSex = $('#register-sex').val()
+        var UseBirth = $('#register-birth').val()
+        var UserPassword = $('#register-password').val()
+        var inputuserPro=$('#pro').val()
+
+        console.log(UserName);
+        if(UserName.length==0||UserEmail.length==0||UserSex.length==0||UseBirth.length==0||UserPassword.length==0||inputuserPro.length==0){
+            alert('信息不可为空')
+            return
+        }
+        if (!isUserEmailExist) {
+            alert('用户名已存在')
+            return
+        }
+        if (!isPasswordSame) {
+            alert('两次密码不一致')
+            return
+        }
+
+        // 提交数据
+        $.post('/api/Admin/register', {
+            UserName,
+            UserEmail,
+            UserSex,
+            UseBirth,
+            UserPassword,
+            inputuserPro
+        }, function(err, data) {
+            if (err) {
+                alert(err)
+                return
+            }
+            alert('注册成功请添加头像')
+            f()
+        })
+    })
+
+
+    //上传文件
+    $("#btn").click(function(){
+
+        var file = $("#uploadFile").val();
+        var pos = file.lastIndexOf(".");
+        console.log(pos);
+        var filename = file.substring(pos+1);
+        console.log(filename);
+
+        var formData = new FormData()
+        var UserEmail = $('#register-email').val()
+        formData.append('file',$("#uploadFile")[0].files[0],UserEmail+'.'+filename)
+        //console.log($("#uploadFile")[0].files[0])
+        $.ajax({
+            url: '/api/Admin/uploadImg',
+            type: 'post',
+            processData: false,
+            contentType: false,
+            data: formData,
+            dataType: "formData",
+            mimeType:"multipart/form-data",
+        })
+        location.reload()
+    });
+
+    function f() {
+        document.getElementById("imageLoad").style.display='block';
+        document.getElementById("imageLoad1").style.display='none';
+    }
+
+</script>
+</body>
+</html>

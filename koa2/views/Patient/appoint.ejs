@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<%- include ../public/head.ejs %>
+<body>
+<div class="page">
+  <!--头部导航栏-->
+  <%- include ../public/header.ejs %>
+  <div class="page-content d-flex align-items-stretch">
+    <!-- 侧边栏 -->
+    <nav class="side-navbar">
+      <!-- 侧边栏登录信息-->
+      <div class="sidebar-header d-flex align-items-center">
+        <div class="avatar"><img src="<%= data.image %>" alt="..." class="img-fluid rounded-circle"></div>
+        <div class="title">
+          <h1 class="h4"><%= data.userName %></h1>
+          <p></p>
+        </div>
+      </div>
+      <!-- 侧面导航栏-->
+      <ul class="list-unstyled">
+        <li><a href="/PatUserindex"> <i class="icon-home"></i>首页</a></li>
+        <li><a href="#Dropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-grid"></i>预约</a>
+          <ul id="Dropdown" class="collapse list-unstyled ">
+            <li class="active"><a href="/appoint">我的预约</a></li>
+            <li><a href="/appointdoc">预约医生</a></li>
+          </ul>
+        </li>
+        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>病历查看</a>
+          <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+            <li><a href="/medical">疗程查看</a></li>
+            <li><a href="/orthotics">矫正器查看</a></li>
+          </ul>
+        </li>
+        <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>反馈信息</a>
+          <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+            <li><a href="/addfankui">添加反馈</a></li>
+            <li><a href="/lookfankui">查看反馈</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+
+    <div class="content-inner">
+      <!--页面标题-->
+      <header class="page-header">
+        <div class="container-fluid">
+          <h2 class="no-margin-bottom">预约</h2>
+        </div>
+      </header>
+      <div class="breadcrumb-holder container-fluid">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">首页</a></li>
+          <li class="breadcrumb-item active">我的预约</li>
+        </ul>
+      </div>
+      <!-- 第一板块 -->
+      <section>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-body">
+                    <h5 class="card-title text-center">最新预约</h5>
+                    <table class="table">
+                      <thead>
+                      <tr>
+                        <th>患者姓名</th>
+                        <th>医生姓名</th>
+                        <th>预约时间</th>
+                        <th>预约原因</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td><%= UserApp[0].PatUser.Name%></td>
+                        <td><%= UserApp[0].DocUser.Name%></td>
+                        <td><%= UserApp[0].AppDay%> <%=UserApp[0].AppTime%></td>
+                        <td><%= UserApp[0].AppointReason%></td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="daily-feeds card">
+                <div class="card-header">
+                  <h3 class="h4">预约记录</h3>
+                </div>
+                <div class="card-body no-padding">
+                  <!-- Item-->
+                  <% AppList.applist.forEach(function(item){%>
+                  <div class="item clearfix">
+                    <div class="feed d-flex justify-content-between">
+                      <div class="feed-body d-flex justify-content-between"><a href="#" class="feed-profile"><img src="<%=item.DocUser.Pic%>" alt="person" class="img-fluid rounded-circle"></a>
+                        <div class="content">
+                          <span><%=item.DocUser.Name %></span>
+                          <div class="full-date"><small><%= item.AppDay%>   <%= item.AppTime%></small></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="quote has-shadow"> <small><%=item.AppointReason%></small></div>
+                  </div>
+                  <% }) %>
+
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+      </section>
+      <%- include ../public/footer.ejs %>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript files-->
+<%- include ../public/js.ejs %>
+<script>
+
+  $(document).ready(function () {
+    //第一次进入页面刷新一次，仅一次
+    //location.href.indexOf("#")获取当前页面地址并在其中查找"#"首次出现位置，找不到就是-1
+    if (location.href.indexOf("#") == -1) {
+      location.href = location.href + "#";
+      location.reload();
+    }
+  })
+
+</script>
+</body>
+</html>
+
+

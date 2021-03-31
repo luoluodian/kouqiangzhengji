@@ -1,0 +1,4 @@
+vp1264.3ds
+Pelvis
+Polys: 2325
+

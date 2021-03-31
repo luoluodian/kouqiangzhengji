@@ -1,0 +1,42 @@
+
+<header class="header">
+    <nav class="navbar">
+        <!-- Search Box-->
+        <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="What are you looking for..." class="form-control">
+            </form>
+        </div>
+        <div class="container-fluid">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <!-- 顶部导航栏 标题-->
+                <div class="navbar-header">
+                    <!-- Navbar Brand --><a href="/" class="navbar-brand d-none d-sm-inline-block">
+                        <div class="brand-text d-none d-lg-inline-block"><span>口腔正畸过程管理系统</span></div>
+                        <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong></strong></div></a>
+                    <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+                </div>
+                <!-- Navbar Menu 右边 -->
+                <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                    <!-- 退出登录-->
+                    <li class="nav-item"><button id="logout1" onclick="logout()" class="nav-link logout" style="opacity: 0.5;" value="1"> <span class="d-none d-sm-inline">退出登录</span><i class="fa fa-sign-out"></i></button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        function logout() {
+            if (confirm('是否确定退出登录？') === false) {
+                return
+            }
+            $.post('/api/Docindex/logout', function (data,status) {
+                if (data.errno==0) {
+                    alert('已成功退出')
+                    location.href = '/login'
+                }
+            })
+        }
+    </script>
+</header>

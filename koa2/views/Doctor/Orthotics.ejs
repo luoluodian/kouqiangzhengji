@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<%- include ../public/head.ejs %>
+<body>
+<div class="page">
+    <!--头部导航栏-->
+    <%- include ../public/header.ejs %>
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 侧边栏 -->
+        <%- include ../public/side.ejs %>
+        <div class="content-inner">
+            <!--页面标题-->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">病例查看</h2>
+                </div>
+            </header>
+            <div class="breadcrumb-holder container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">首页</a></li>
+                    <li class="breadcrumb-item active">矫正器查看</li>
+                </ul>
+            </div>
+            <!-- 第一板块 -->
+
+            <section class="client no-padding-top">
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Work Amount  -->
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- 页脚 -->
+            <%- include ../public/footer.ejs %>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- JavaScript files-->
+<%- include ../public/js.ejs %>
+
+</body>
+</html>

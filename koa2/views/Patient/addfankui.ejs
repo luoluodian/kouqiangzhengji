@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<%- include ../public/head.ejs %>
+<link rel="stylesheet" href="datecss/date.css">
+<body>
+<div class="page">
+    <!--头部导航栏-->
+    <%- include ../public/header.ejs %>
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 侧边栏 -->
+        <nav class="side-navbar">
+            <!-- 侧边栏登录信息-->
+            <div class="sidebar-header d-flex align-items-center">
+                <div class="avatar"><img src="<%= data.image %>" alt="..." class="img-fluid rounded-circle"></div>
+                <div class="title">
+                    <h1 class="h4"><%= data.userName %></h1>
+                    <p></p>
+                </div>
+            </div>
+            <!-- 侧面导航栏-->
+            <ul class="list-unstyled">
+                <li><a href="/PatUserindex"> <i class="icon-home"></i>首页</a></li>
+                <li><a href="#Dropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-grid"></i>预约</a>
+                    <ul id="Dropdown" class="collapse list-unstyled ">
+                        <li><a href="/appoint">我的预约</a></li>
+                        <li><a href="/appointdoc">预约医生</a></li>
+                    </ul>
+                </li>
+                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>病历查看</a>
+                    <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                        <li><a href="/medical">疗程查看</a></li>
+                        <li><a href="/orthotics">矫正器查看</a></li>
+                    </ul>
+                </li>
+                <li><a href="#exampledropdownDropdown1" aria-expanded="true" data-toggle="collapse"> <i class="icon-interface-windows"></i>反馈信息</a>
+                    <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+                        <li class="active"><a href="/addfankui">添加反馈</a></li>
+                        <li ><a href="/lookfankui">查看反馈</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="content-inner">
+            <!--页面标题-->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">添加反馈</h2>
+                </div>
+            </header>
+            <div class="breadcrumb-holder container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">首页</a></li>
+                    <li class="breadcrumb-item active">添加反馈</li>
+                </ul>
+            </div>
+
+
+            <section class="client no-padding-top" style="margin-top: 10px">
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="h4">创建反馈</h3>
+                        </div>
+                        <div class="container-fluid" style="margin-top: 10px">
+                            <%list.forEach(list=>{%>
+                            <button  class="btn btn-outline-primary"  name="<%=list.DocUserId%>" onclick="dianji(this)"><%=list.DocUser.Name%></button>
+                            <%})%>
+                        </div>
+
+                        <div class="card-body">
+                            <form class="form-horizontal">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 form-control-label">医生信息：</label>
+                                    <div class="col-md-1">
+                                        <input type="text" placeholder="编号" readonly="readonly" class="form-control"  id="DocId" >
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" placeholder="姓名" readonly="readonly" class="form-control" id="name">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="email" placeholder="邮箱" readonly="readonly" class="form-control"  id="email">
+                                    </div>
+                                </div>
+                                <div class="line"></div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 form-control-label">反馈内容：</label>
+                                    <textarea class="form-control col-md-9" id="medpro" rows="3"></textarea>
+                                </div>
+                                <div class="line"></div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4 offset-sm-3">
+                                        <button  class="btn btn-light" id="tijiao">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form>
+                                <div class="line"></div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 form-control-label">上传图片：</label>
+                                    <div class="container kv-main col-md-9">
+                                        <div id="uploader"></div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 页脚 -->
+            <%- include ../public/footer.ejs %>
+        </div>
+    </div>
+</div>
+
+
+
+<%- include ../public/js.ejs %>
+<script src="/upload/easyUploader.js"></script>
+<link rel="stylesheet" href="/upload/main.css">
+<link href="/upload/bootstrap-fileinput.css" rel="stylesheet">
+<script src="/upload/bootstrap-fileinput.js"></script>
+
+
+
+<script>
+
+    var $docId=$('#DocId')
+    var $name=$('#name')
+    var $email=$('#email')
+    var $medpro=$('#medpro')
+
+    //绑定案件信息
+    function dianji(element) {
+        console.log(element.name);
+        const _Docid=element.name
+        console.log(_Docid);
+        $.post('api/addfankui/finddoc',{
+                _Docid,
+            },
+            function (data,status) {
+                if(status=='success'){
+                    addinfo(data)
+                }
+            })
+        //   console.log('111');
+    }
+
+    function addinfo(data) {
+        console.log(data);
+        $name.val(data.list[0].Name)
+        $email.val(data.list[0].Email)
+        $docId.val(data.list[0].id)
+    }
+
+
+
+    //上传表单信息
+    $("#tijiao").on('click',function(){
+        const docid=$docId.val()
+        const _medpro=$medpro.val()
+        if(_medpro.length==0||docid.length==0){
+            return  alert('请输入信息')
+        }
+        $.post('api/addfankui/addfankui',{
+            docid,
+            _medpro,
+        },function (data,status) {
+            if(status=='success'){
+                return alert('创建成功')
+            }
+        })
+        return false
+    })
+
+
+    var uploader = easyUploader({
+        id: "uploader",
+        accept: '.jpg,.png,.doc,.docx',
+        action: 'api/addfankui/addChatPic',
+        dataFormat: 'formData',
+        maxCount: 10,
+        maxSize: 3,
+        multiple: true,
+        data: null,
+        onChange: function(fileList) {
+            /* input选中时触发 */
+        },
+        onRemove: function(removedFiles, files) {
+            console.log('onRemove', removedFiles);
+        },
+        onSuccess: function(res) {
+            console.log('onSuccess', res);
+        },
+        onError: function(err) {
+            console.log('onError', err);
+        },
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>时间选择</title>
+    <link rel="stylesheet" href="datecss/date.css">
+    <script src="/vendor/jquery/jquery.min.js"></script>
+</head>
+<body>
+<div class="office">
+
+
+    <!--预约时间-->
+    <div class="weui-panel">
+        <div class="office-time">
+            <h4>请选择预约日期</h4>
+            <p>只可提前预约最近5天</p>
+            <div class="office-time-con office-time-data">
+                <div class="checked office-time-item date_" val="2019-11-25"  data-time="2019-11-25">今天<span>11月25日</span></div>
+                <div class="office-time-item date_" val="2019-11-26"  data-time="2019-11-26">明天<span>11月26日</span></div>
+                <div class="office-time-item date_" val="2019-11-27"  data-time="2019-11-27">后天<span>11月27日</span></div>
+                <div class="office-time-item date_" val="2019-11-28"  data-time="2019-11-28">星期四<span>11月28日</span></div>
+                <div class="office-time-item date_" val="2019-11-29"  data-time="2019-11-29">星期五<span>11月29日</span></div>
+                <div class="office-time-item date_" val="2019-11-30"  data-time="2019-11-30">星期六<span>11月30日</span></div>
+                <div class="office-time-item date_" val="2019-12-01"  data-time="2019-12-1">星期天<span>12月01日</span></div>
+              </div>
+        </div>
+    </div>
+
+    <!--预约时段-->
+    <div class="weui-panel">
+        <div class="office-time">
+            <h4>请选择预约时段</h4>
+            <p>每个数字代表一个时段，例如9点表示9:00:00~9:59:59</p>
+            <div class="office-time-legend">
+                <div class="office-time-legend-item">
+                    <div class="legend-img used"></div>
+                    <div class="legend-text">可选</div>
+                </div>
+                <div class="office-time-legend-item">
+                    <div class="legend-img disabled"></div>
+                    <div class="legend-text">已预订</div>
+                </div>
+                <div class="office-time-legend-item">
+                    <div class="legend-img checked"></div>
+                    <div class="legend-text">已选</div>
+                </div>
+            </div>
+            <div class="office-time-con office-time-slot" id="timeSoltCon">
+                <div class="office-time-item slot_ disable" data-time="09:00">09:00</div>
+                <div class="office-time-item slot_ disable" data-time="09:30">09:30</div>
+                <div class="office-time-item slot_" data-time="10:00">10:00</div>
+                <div class="office-time-item slot_" data-time="10:30">10:30</div>
+                <div class="office-time-item slot_" data-time="11:00">11:00</div>
+                <div class="office-time-item slot_" data-time="11:30">11:30</div>
+                <div class="office-time-item slot_" data-time="12:00">12:00</div>
+                <div class="office-time-item slot_" data-time="13:30">13:30</div>
+                <div class="office-time-item slot_" data-time="14:00">14:00</div>
+                <div class="office-time-item slot_" data-time="14:30">14:30</div>
+                <div class="office-time-item slot_" data-time="15:00">15:00</div>
+                <div class="office-time-item slot_" data-time="15:30">15:30</div>
+                <div class="office-time-item slot_" data-time="16:00">16:00</div>
+                <div class="office-time-item slot_" data-time="16:30">16:30</div>
+                <div class="office-time-item slot_" data-time="17:00">17:00</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-btn-area">
+        <a class="weui-btn weui-btn_main" href="javascript:;" id="submitOrder">立即预约</a>
+    </div>
+</div>
+
+<!-- body 最后 -->
+<script src="js/jquery.min.js"></script>
+
+
+</body>
+</html>

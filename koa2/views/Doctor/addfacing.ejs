@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<%- include ../Docpublic/head.ejs %>
+<body>
+
+<div class="page">
+    <!--头部导航栏-->
+    <%- include ../Docpublic/header.ejs %>
+
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 侧边栏 -->
+        <%- include ../Docpublic/side.ejs %>
+        <div class="content-inner">
+            <!--页面标题-->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">添加牙套</h2>
+                </div>
+            </header>
+            <div class="breadcrumb-holder container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">首页</a></li>
+                    <li class="breadcrumb-item active">添加牙套</li>
+                </ul>
+            </div>
+            <!--今日预约-->
+            <div class="container-fluid" style="margin-top: 10px">
+
+                <%today.forEach(today=>{%>
+                <button  class="btn btn-outline-primary" name="<%=today.PatUser.Email%>" onclick="dianji(this)"><%=today.PatUser.Name%></button>
+                <%})%>
+
+            </div>
+
+            <!-- 添加牙套 -->
+            <section class="client no-padding-top" style="margin-top: 10px">
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="h4">添加牙套</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="form-horizontal">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 form-control-label">基本信息：</label>
+                                    <div class="col-md-1">
+                                        <input type="age" placeholder="编号" class="form-control" id="PatId">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" placeholder="请输入姓名" class="form-control" id="name">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="email" placeholder="请输入邮箱" class="form-control" id="email">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="age" placeholder="年龄" class="form-control" id="age">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-control" id="sex">
+                                            <option value="男">男</option>
+                                            <option value="女">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <div class="line"></div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-4 offset-sm-3">
+                                    <button  class="btn btn-light" id="tijiao">提交</button>
+                                </div>
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">上传牙套3D模型：</label>
+                                <div class="col-md-9">
+                                    <form enctype='multipart/form-data'>
+                                        <div class="form-group" id="uploadForm" >
+                                            <div class="fileinput fileinput-new" data-provides="fileinput"  id="exampleInputUpload">
+                                                <div class="fileinput-new thumbnail" style="width: 200px;height: auto;max-height:150px;">
+                                                    <img id='picImg' style="width: 100%;height: auto;max-height: 140px;" src="images/noimage.png" alt="" />
+                                                </div>
+                                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                                                <div>
+                                                        <span class="btn btn-primary btn-file">
+                                                            <span class="fileinput-new">选择文件</span>
+                                                            <span class="fileinput-exists">换一张</span>
+                                                            <input type="file" name="pic1" id="picID" accept="obj">
+                                                        </span>
+                                                    <a href="javascript:;" class="btn btn-warning fileinput-exists" data-dismiss="fileinput">移除</a>
+                                                    <button type="button" id="uploadSubmit" class="btn btn-info">提交</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 页脚 -->
+            <%- include ../Docpublic/footer.ejs %>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JavaScript files-->
+<%- include ../Docpublic/js.ejs %>
+<script src="/upload/easyUploader.js"></script>
+<link rel="stylesheet" href="/upload/main.css">
+<link href="/upload/bootstrap-fileinput.css" rel="stylesheet">
+<script src="/upload/bootstrap-fileinput.js"></script>
+<script>
+
+    var Patemail
+    var $name=$('#name')
+    var $email=$('#email')
+    var $age=$('#age')
+    var $sex=$('#sex')
+    var $PatId=$('#PatId')
+    var $medpro=$('#medpro')
+
+
+    const _email1=$email.val()
+
+    //绑定案件信息
+    function dianji(element) {
+        Patemail=element.name
+        const _email=element.name
+        console.log(_email);
+        $.post('api/addFacing/userInfo',{
+                _email,
+            },
+            function (data,status) {
+                if(status=='success'){
+                    addinfo(data)
+                }
+            })
+        console.log('111');
+    }
+
+    function addinfo(data) {
+        $name.val(data.result.Name)
+        $email.val(data.result.Email)
+        //console.log(data.result.age);
+        $age.val(data.result.age)
+        $PatId.val(data.result.id)
+        if(data.result.Sex==true){
+            $sex.val('女')
+        }
+    }
+
+    $("#tijiao").on('click',function(){
+        var _name =$name.val()
+        var _id=$PatId.val()
+        var _email=$email.val()
+        var _age=$age.val()
+        if(_name.length==0||_id.length==0||_age.length==0||_email.length==0){
+            return  alert('请输入信息')
+        }
+        $.post('api/addFacing/addfacing',{
+            _id,
+            _email
+        },function (data,status) {
+            if(status=='success'){
+                return alert('创建成功')
+            }
+        })
+        return false
+    })
+
+    //比较简洁，细节可自行完善
+    $('#uploadSubmit').click(function () {
+        var formData = new FormData()
+        formData.append('file',$("#picID")[0].files[0])
+        $.ajax({
+            url: 'api/addFacing/addfacingobj',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            //  dataType: "formData",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if(data.errno=='0'){
+                    alert('上传成功');
+                    location.reload()
+                }
+            },
+            error: function (data) {
+                if(data.errno=='0'){
+                    alert('上传成功');
+                }
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>

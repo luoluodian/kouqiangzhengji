@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<%- include ../public/head.ejs %>
+<link rel="stylesheet" href="datecss/date.css">
+<body>
+<div class="page">
+    <!--头部导航栏-->
+    <%- include ../public/header.ejs %>
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 侧边栏 -->
+        <nav class="side-navbar">
+            <!-- 侧边栏登录信息-->
+            <div class="sidebar-header d-flex align-items-center">
+                <div class="avatar"><img src="<%= data.image %>" alt="..." class="img-fluid rounded-circle"></div>
+                <div class="title">
+                    <h1 class="h4"><%= data.userName %></h1>
+                    <p></p>
+                </div>
+            </div>
+            <!-- 侧面导航栏-->
+            <ul class="list-unstyled">
+                <li><a href="/PatUserindex"> <i class="icon-home"></i>首页</a></li>
+                <li><a href="#Dropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-grid"></i>预约</a>
+                    <ul id="Dropdown" class="collapse list-unstyled ">
+                        <li><a href="/appoint">我的预约</a></li>
+                        <li class="active"><a href="/appointdoc">预约医生</a></li>
+                    </ul>
+                </li>
+                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>病历查看</a>
+                    <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                        <li><a href="/medical">疗程查看</a></li>
+                        <li><a href="/orthotics">矫正器查看</a></li>
+                    </ul>
+                </li>
+                <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>反馈信息</a>
+                    <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+                        <li><a href="/addfankui">添加反馈</a></li>
+                        <li><a href="/lookfankui">查看反馈</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+
+        <div class="content-inner">
+            <!--页面标题-->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">预约</h2>
+                </div>
+            </header>
+            <div class="breadcrumb-holder container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">首页</a></li>
+                    <li class="breadcrumb-item active">预约医生</li>
+                </ul>
+            </div>
+
+
+            <!-- 第一板块 推荐预约和预约记录-->
+            <div class="row container-fluid">
+                <div class="col-md-8" >
+                    <div class="row">
+                        <section class="container-fluid" style="margin-top: 20px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">推荐医生</h5>
+                                        <div class="col-lg-6">
+                                            <div class="client card">
+                                                <% RecDoc.forEach(RecDoc => { %>
+
+                                                <div class="card-body text-center">
+                                                    <div class="client-avatar"><img src="<%=RecDoc.Pic%>" alt="..." class="img-fluid rounded-circle">
+                                                    </div>
+                                                    <div class="client-title" style="margin-top:50px;">
+                                                        <h3><%=RecDoc.Name %> 医生</h3><a data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" name="<%=RecDoc.id%>" onclick="dianji(this)">预约</a>
+                                                    </div>
+                                                </div>
+                                                <% })%>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-body row">
+                                        <h5 class="card-title text-center col-md-12">全部医生</h5>
+                                        <% DocList.forEach(DocList => { %>
+                                            <div class="col-lg-6">
+                                                <div class="client card">
+                                                    <div class="card-body text-center">
+                                                        <div class="card-body text-center">
+                                                            <div class="client-avatar"><img src="<%= DocList.Pic %>" alt="..." class="img-fluid rounded-circle">
+                                                            </div>
+
+                                                            <div class="client-title" style="margin-top: 50px">
+                                                                <h3><%= DocList.Name %> 医生</h3><a data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" name="<%= DocList.id%>" onclick="dianji(this)">预约</a>
+                                                            </div>
+
+
+                                                            <div class="client-info">
+                                                                <div class="row">
+                                                                    <div class="col-6"><strong><%= DocList.AppFirstCount %></strong><br><small>初诊次数</small></div>
+                                                                    <div class="col-6"><strong><%= DocList.AppCount %></strong><br><small>所有次数</small></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <%})%>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <section>
+                        <div class="articles card">
+                            <div class="card-header d-flex align-items-center">
+                                <h2 class="h3">预约排行榜</h2>
+                            </div>
+                            <div class="card-body no-padding">
+                                <% RecTop.forEach(RecTop => { %>
+                                    <div class="item d-flex align-items-center">
+                                        <div class="image"><img src="<%= RecTop.DocUser.Pic %>" alt="..." class="img-fluid rounded-circle"></div>
+                                        <div class="text"><a href="#">
+                                                <h3 class="h5"><%= RecTop.DocUser.Name %> </h3></a><small><%= RecTop.DocUser.Profile%></small></div>
+                                        <div class="col-6" style="float: right"><strong style="float: right"><%= RecTop.count%>次</strong></div>
+                                    </div>
+                                <% })%>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+
+
+
+
+            <!--预约模块-->
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="office modal-content" >
+                    <!--预约时间-->
+                    <div class="weui-panel">
+                        <div class="office-time">
+                            <h4>请选择预约日期</h4>
+                            <p>只可提前预约最近6天</p>
+                            <div class="office-time-con office-time-data">
+                                <% DateDay.forEach(DateDay=>{%>
+                                <div class="<%=DateDay.Class%>" data-time="<%=DateDay.Day%>"><%=DateDay.Week%><span><%=DateDay.Date2%></span></div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                    <!--预约时段-->
+                    <div class="weui-panel">
+                        <div class="office-time">
+                            <h4>请选择预约时段</h4>
+                            <div class="office-time-legend">
+                                <div class="office-time-legend-item">
+                                    <div class="legend-img used"></div>
+                                    <div class="legend-text">可选</div>
+                                </div>
+                                <div class="office-time-legend-item">
+                                    <div class="legend-img disabled"></div>
+                                    <div class="legend-text">已预订</div>
+                                </div>
+                                <div class="office-time-legend-item">
+                                    <div class="legend-img checked"></div>
+                                    <div class="legend-text">已选</div>
+                                </div>
+                            </div>
+                            <div class="office-time-con office-time-slot" id="timeSoltCon">
+                                <div class="office-time-item slot_ " data-time="09:00" id="1am">09:00</div>
+                                <div class="office-time-item slot_ " data-time="09:30" id="2am">09:30</div>
+                                <div class="office-time-item slot_" data-time="10:00"  id="3am">10:00</div>
+                                <div class="office-time-item slot_" data-time="10:30"  id="4am">10:30</div>
+                                <div class="office-time-item slot_" data-time="11:00"  id="5am">11:00</div>
+                                <div class="office-time-item slot_" data-time="11:30"  id="6am">11:30</div>
+                                <div class="office-time-item slot_" data-time="12:00"  id="7am">12:00</div>
+                                <div class="office-time-item slot_" data-time="14:00"  id="8am">14:00</div>
+                                <div class="office-time-item slot_" data-time="14:30"  id="9am">14:30</div>
+                                <div class="office-time-item slot_" data-time="15:00"   id="10am">15:00</div>
+                                <div class="office-time-item slot_" data-time="15:30"   id="11am">15:30</div>
+                                <div class="office-time-item slot_" data-time="16:00"   id="12am">16:00</div>
+                                <div class="office-time-item slot_" data-time="16:30"   id="13am">16:30</div>
+                                <div class="office-time-item slot_" data-time="17:00"   id="14am">17:00</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-panel">
+                        <div class="office-time">
+                            <label for="message-text" class="col-form-label">预约原因</label>
+                            <% DocEmail.forEach(DocEmail=>{ %>
+                            <!--<textarea class="form-control" id="<%=DocEmail.id%>text" ></textarea>-->
+                            <textarea class="form-control" id="text" ></textarea>
+                            <%})%>
+                        </div>
+                    </div>
+                    <div class="weui-btn-area">
+                        <a class="btn btn-light" style="float: left" href="javascript:;" id="submitOrder">立即预约</a>
+                        <a class="btn btn-light" data-dismiss="modal" style="float: right">关闭</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- 页脚 -->
+            <%- include ../public/footer.ejs %>
+        </div>
+    </div>
+</div>
+
+
+
+<%- include ../public/js.ejs %>
+
+
+<script>
+
+    var box
+    var day
+    var Time
+    var DcoId
+
+
+
+
+
+    $('.date_').click(function() {
+        $('.date_').removeClass('checked');
+        $(this).addClass('checked');
+        day=$(this).attr("data-time")
+        yuyue(day,DcoId)
+    });
+
+
+    $(".slot_").on("click", function () {
+        var $this = $(this)
+        var $boxes = $this.parent().children()
+        if ($this.hasClass('disable')){
+            return;
+        }
+        if (!box) {
+            box = $this;
+            $boxes.removeClass('checked');
+            $this.addClass('checked');
+        } else {
+            if(box.attr("data-time")==$this.attr("data-time")){
+                box=null
+                $boxes.removeClass('checked');
+            }else {
+                box=$this
+                $boxes.removeClass('checked');
+                $this.addClass('checked');
+            }
+        }
+
+    })
+
+    function dianji(element) {
+        $('#text').val("").focus()
+        console.log(element.name)
+        console.log(element.name);
+        DcoId=element.name
+        console.log('111',DcoId);
+        console.log($('.checked').attr("data-time"));
+        const yuyueday=$('.checked').attr("data-time")
+        yuyue(yuyueday,DcoId)
+    }
+
+
+    function yuyue(day1,id){
+
+        const _day = day1
+        const _id =id
+
+        $(".slot_").removeClass('disable')
+        $(".slot_").removeClass('checked')
+        $.post('/api/PatAppints/appday',{
+            _day,
+            _id
+        },function (data,status) {
+            console.log(data.result);
+            for(var i=1;i<14;i++){
+                var time =$('#'+i+'am').attr("data-time")
+                if(data.result.includes(time)==true){
+                    $('#'+i+'am').addClass('disable')
+                }
+            }
+        })
+
+    }
+
+
+
+    $("#submitOrder").on('click',function(){
+
+
+        var $text=$('#text')
+        var Text=$text.val()
+        console.log(Text);
+        if(box){
+            Time = box.attr("data-time");
+            console.log('111',Time);
+        }else{
+            alert("请选择预约时间")
+        }
+        if(Text==null){
+            alert('请填写预约原因')
+        }
+        //console.log(DcoId);
+        console.log(Text);
+        const _time=Time
+        const _day=day
+        const _Protext=Text
+        const _Docid=DcoId
+        $.post('/api/PatAppints/doAppints',{
+            _Protext,
+            _time,
+            _day,
+            _Docid
+        },function (data,status) {
+            if(data.errno==0){
+                alert('预约成功')
+                location.reload()
+            }
+        })
+
+
+    })
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<%- include ('./public/head.ejs') %>
+<body>
+<div class="page">
+  <!--头部导航栏-->
+  <%- include ('./public/header.ejs') %>
+  <div class="page-content d-flex align-items-stretch">
+    <!-- 侧边栏 -->
+    <%- include ('./public/side.ejs') %>
+    <div class="content-inner">
+      <!--页面标题-->
+      <header class="page-header">
+        <div class="container-fluid">
+          <h2 class="no-margin-bottom">折线图</h2>
+        </div>
+      </header>
+
+      <!-- 第一板块 -->
+      <section class="dashboard-counts no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row bg-white has-shadow">
+            <!-- Item -->
+            <div class="col-xl-3 col-sm-6">
+              <div class="item d-flex align-items-center">
+
+              </div>
+            </div>
+            <!-- Item -->
+            <div class="col-xl-3 col-sm-6">
+              <div class="item d-flex align-items-center">
+
+              </div>
+            </div>
+            <!-- Item -->
+            <div class="col-xl-3 col-sm-6">
+              <div class="item d-flex align-items-center">
+
+              </div>
+            </div>
+            <!-- Item -->
+            <div class="col-xl-3 col-sm-6">
+              <div class="item d-flex align-items-center">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Dashboard Header Section    -->
+      <section class="dashboard-header">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- Statistics -->
+            <div class="statistics col-lg-3 col-12">
+
+            </div>
+            <!--             -->
+            <div class="chart col-lg-6 col-12">
+
+            </div>
+            <div class="chart col-lg-3 col-12">
+
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Projects Section-->
+      <section class="projects no-padding-top">
+        <div class="container-fluid">
+
+        </div>
+      </section>
+      <!-- Client Section-->
+      <section class="client no-padding-top">
+
+      </section>
+      <!-- Feeds Section-->
+      <!-- Updates Section                                                -->
+      <section class="updates no-padding-top">
+
+      </section>
+      <!-- 页脚 -->
+      <%- include ('./public/footer.ejs') %>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript files-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/popper.js/umd/popper.min.js"> </script>
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/vendor/jquery.cookie/jquery.cookie.js"> </script>
+<script src="/vendor/chart.js/Chart.min.js"></script>
+<script src="/vendor/jquery-validation/jquery.validate.min.js"></script>
+<script src="/js/charts-home.js"></script>
+<!-- Main File-->
+<script src="/js/front.js"></script>
+</body>
+</html>

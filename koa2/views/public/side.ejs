@@ -1,0 +1,33 @@
+<nav class="side-navbar">
+    <!-- 侧边栏登录信息-->
+    <div class="sidebar-header d-flex align-items-center">
+        <div class="avatar"><img src="<%= data.image %>" alt="..." class="img-fluid rounded-circle"></div>
+        <div class="title">
+            <h1 class="h4"><%= data.userName %></h1>
+            <p></p>
+        </div>
+    </div>
+    <!-- 侧面导航栏-->
+    <ul class="list-unstyled">
+        <li><a href="/PatUserindex"> <i class="icon-home"></i>首页</a></li>
+        <li><a href="#Dropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-grid"></i>预约</a>
+            <ul id="Dropdown" class="collapse list-unstyled ">
+                <li><a href="/appoint">我的预约</a></li>
+                <li><a href="/appointdoc">预约医生</a></li>
+            </ul>
+        </li>
+        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>病历查看</a>
+            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                <li><a href="/medical">疗程查看</a></li>
+                <li><a href="/orthotics">矫正器查看</a></li>
+            </ul>
+        </li>
+        <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>反馈信息</a>
+            <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+                <li><a href="/addfankui">添加反馈</a></li>
+                <li><a href="/lookfankui">查看反馈</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+

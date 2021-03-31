@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<%- include ../public/head.ejs %>
+  <body>
+    <div class="page">
+      <!--头部导航栏-->
+      <%- include ../public/header.ejs %>
+      <div class="page-content d-flex align-items-stretch"> 
+         <!-- 侧边栏 -->
+        <nav class="side-navbar">
+          <!-- 侧边栏登录信息-->
+          <div class="sidebar-header d-flex align-items-center">
+            <div class="avatar"><img src="<%= data.image %>" alt="..." class="img-fluid rounded-circle"></div>
+            <div class="title">
+              <h1 class="h4"><%= data.userName %></h1>
+              <p></p>
+            </div>
+          </div>
+          <!-- 侧面导航栏-->
+          <ul class="list-unstyled">
+            <li class="active"><a href="/PatUserindex"> <i class="icon-home"></i>首页</a></li>
+            <li><a href="#Dropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-grid"></i>预约</a>
+              <ul id="Dropdown" class="collapse list-unstyled ">
+                <li><a href="/appoint">我的预约</a></li>
+                <li><a href="/appointdoc">预约医生</a></li>
+              </ul>
+            </li>
+            <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>病历查看</a>
+              <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                <li><a href="/medical">疗程查看</a></li>
+                <li><a href="/orthotics">矫正器查看</a></li>
+              </ul>
+            </li>
+            <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>反馈信息</a>
+              <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+                <li><a href="/addfankui">添加反馈</a></li>
+                <li><a href="/lookfankui">查看反馈</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="content-inner">
+          <!--页面标题-->
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">首页</h2>
+            </div>
+          </header>
+          <!-- 个人信息 -->
+          <section>
+            <div class="container-fluid">
+              <div class="row">
+
+                <!--个人信息-->
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-body">
+                        <div class="card-body">
+                        <h5 class="card-title text-center">个人信息</h5>
+                          <table class="table">
+                            <thead>
+                            <tr>
+                              <th > </th>
+                              <th ><img src="<%= data.image%>" alt="..." style="height: 50px;width: 50px" class="img-fluid rounded-circle">
+                              </th>
+                              <th >姓名： <%= data.userName %></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                              <td></td>
+                              <td>性别： <%= data.userSex %></td>
+                              <td>邮箱:<%= data.email %></td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td>年龄:<%= data.age%></td>
+                              <td>患者编号:<%=data.id%></td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td>预约次数:<%= AppCount %></td>
+                              <td>病历次数:<%= MedCount%></td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        <a class="btn  btn-outline-light float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">更改密码</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--最新消息-->
+                <div class="col-sm-6">
+
+                <div class="daily-feeds card">
+                  <div class="card-header">
+                    <h3 class="h4">最新消息</h3>
+                  </div>
+                  <div class="card-body no-padding">
+                    <%if(News==null&&NewsApp.length==0){%>
+                      <div class="item">
+                        <div class="form-group">
+                          <p>没有最新消息！</p>
+                        </div>
+                      </div>
+                    <%}else if(News==null&&NewsApp.length>0) {%>
+                    <!-- Item-->
+                    <!-- Item-->
+                    <% NewsApp.forEach(NewsApp=>{%>
+                      <div class="item">
+                        <div class="feed d-flex justify-content-between">
+                          <div class="feed-body d-flex justify-content-between"><a href="#" class="feed-profile"><img src="<%= NewsApp.DocUser.Pic%>" alt="person" class="img-fluid rounded-circle"></a>
+                            <div class="content">
+                              <span><%= NewsApp.DocUser.Name%></span>
+                              <div class="full-date"><small><%= NewsApp.AppDay%> <%= NewsApp.AppTime%></small></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="quote has-shadow"> <small><%= NewsApp.AppointReason%></small></div>
+                      </div>
+                    <%})} else {%>
+                        <% News.forEach(News=>{%>
+                          <div class="item">
+                            <div class="feed d-flex justify-content-between">
+                              <div class="feed-body d-flex justify-content-between"><a href="#" class="feed-profile"><img src="<%= News.DocUser.Pic%>" alt="person" class="img-fluid rounded-circle"></a>
+                                <div class="content">
+                                  <span><%= News.DocUser.Name%></span>
+                                  <div class="full-date"><small><%= News.fankuitime %></small></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="quote has-shadow"> <small><%= News.fankuineirong%></small></div>
+                          </div>
+                        <%})%>
+                          <% NewsApp.forEach(NewsApp=>{%>
+                            <div class="item">
+                              <div class="feed d-flex justify-content-between">
+                                <div class="feed-body d-flex justify-content-between"><a href="#" class="feed-profile"><img src="<%= NewsApp.DocUser.Pic%>" alt="person" class="img-fluid rounded-circle"></a>
+                                  <div class="content">
+                                    <span><%= NewsApp.DocUser.Name%></span>
+                                    <div class="full-date"><small><%= NewsApp.AppDay%> <%= NewsApp.AppTime%></small></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="quote has-shadow"> <small><%= NewsApp.AppointReason%></small></div>
+                            </div>
+                      <%})}%>
+                    <!-- Item-->
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </section>
+
+          <!--更改个人信息-->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-center" id="exampleModalLabel">更改密码</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/api/Patindex/updataPat">
+                      <div class="form-row">
+                        <div class="form-group col-md-12 row">
+                          <div class="col-md-1"></div>
+                        <input type="password" class="form-control col-md-7" placeholder="原密码" id="inputPassword1" name="Password1" ><small id="Password1-info" class="form-text text-muted col-md-4" style="float: right;width: 20%"></small>
+                        </div>
+                        <div class="form-group col-md-12 row">
+                          <div class="col-md-1"></div>
+                          <input type="password" class="form-control col-md-7" placeholder="新密码" id="inputPassword2" name="Password2" style="width: 75%"><small id="Password2-info" class="form-text text-muted col-md-4" style="float: right;width: 20%"></small>
+                        </div>
+                        <div class="form-group col-md-12 row">
+                          <div class="col-md-1"></div>
+                          <input type="password" class="form-control col-md-7" placeholder="再次输入新密码" id="inputPassword3" name="Password3" style="width: 75%"><small id="Password3-info" class="form-text text-muted col-md-4" style="float:right;width: 20%"></small>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        <input type="button" class="btn btn-primary" id="tijiao" value="确定">
+                      </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- 页脚 -->
+          <%- include ../public/footer.ejs %>
+        </div>
+          </div>
+        </div>
+    </div>
+    <!-- JavaScript files-->
+      <%- include ../public/js.ejs %>
+  </body>
+<script>
+
+  let $pasd1=$('#inputPassword1')
+  let $pasd3=$('#inputPassword3')
+  let $pasd2=$('#inputPassword2')
+
+  let $pasdInfo1=$('#Password1-info')
+  let $pasdInfo2=$('#Password2-info')
+  let $pasdInfo3=$('#Password3-info')
+
+  let pasd1ID
+  let pasd2ID
+  let pasd3ID
+
+  let ispasd1ID=false//原密码错误
+  let ispasd2ID=false//密码太短
+  let ispasd3ID=false//密码不一致
+  let isFirst=true//是否第一次操作
+
+  //查找密码
+  $pasd1.on('input',function () {
+    if(pasd1ID){
+      clearTimeout(pasd1ID)
+    }
+    pasd1ID=setTimeout(function () {
+      let input1=$pasd1.val()
+      $.post("/api/Patindex/findPsd",{
+        input1
+      },function (data,err) {
+        $pasdInfo1.show()
+        //console.log(data);
+        if (data.result.errno=='0') {
+          ispasd1ID=true//密码正确
+          $pasdInfo1.text('密码正确')
+        }else {
+          ispasd1ID=false//密码错误
+          $pasdInfo1.text('密码错误')
+        }
+      })
+    },500)
+  })
+
+  //密码是否一致
+  $pasd3.on('input',function () {
+    if(pasd3ID){
+      clearTimeout(pasd3ID)
+    }
+    pasd3ID=setTimeout(function () {
+      let input2=$pasd2.val()
+      let input3=$pasd3.val()
+     // console.log(isFirst);
+      isFirst=false
+      //console.log(isFirst);
+      if(input2!=input3){
+        ispasd3ID=false
+        $pasdInfo3.text('两次密码不一致')
+      }else {
+        ispasd3ID=true
+        $pasdInfo3.text('两次密码一致')
+      }
+    },500)
+  })
+
+  //密码是否太短
+  $pasd2.on('input',function () {
+    if(pasd2ID){
+      clearTimeout(pasd2ID)
+    }
+    pasd2ID=setTimeout(function () {
+      let input2=$pasd2.val()
+      let input3=$pasd3.val()
+      if(input2.length<6){
+        ispasd2ID=false
+        $pasdInfo2.text('密码太短')
+      }else {
+        ispasd2ID=true
+        $pasdInfo2.text('')
+      }
+    if(isFirst==false){
+      if(input2!=input3){
+        ispasd3ID=false
+        $pasdInfo3.text('两次密码不一致')
+      }else {
+        ispasd3ID=true
+        $pasdInfo3.text('两次密码一致')
+      }
+    }
+    },500)
+  })
+
+  //更改新密码
+  $('#tijiao').click(function () {
+    let pasd=$pasd3.val()
+    if(ispasd1ID==false||ispasd2ID==false||ispasd3ID==false){
+      return alert('信息有误，请更改信息')
+    }else {
+      $.post("/api/Patindex/updataPsd",{
+        pasd
+      },function (data,err) {
+        console.log(data);
+        if(data.result.errno=='0'){
+          console.log('1');
+          alert('更改成功')
+          location.reload()
+        }
+      })
+    }
+  })
+</script>
+</html>

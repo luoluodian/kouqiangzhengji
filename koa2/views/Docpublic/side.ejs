@@ -1,0 +1,29 @@
+<nav class="side-navbar">
+    <!-- 侧边栏登录信息-->
+    <div class="sidebar-header d-flex align-items-center">
+        <div class="avatar"><img src="<%= data.userPic %>" alt="..." class="img-fluid rounded-circle"></div>
+        <div class="title">
+            <h1 class="h4"><%= data.userName %></h1>
+            <p></p>
+        </div>
+    </div>
+    <!-- 侧面导航栏-->
+    <ul class="list-unstyled">
+        <li ><a href="/DocUserindex"> <i class="icon-home"></i>首页 </a></li>
+        <li><a href="/DocUserApp"> <i class="fa fa-hospital-o"></i>预约查看</a></li>
+        <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-align-justify"></i>患者查看</a>
+            <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+                <li><a href="/Patlist">患者列表</a></li>
+                <li><a href="/Medlook">患者病历</a></li>
+                <li><a href="/faclook">患者牙套</a></li>
+            </ul>
+        </li>
+        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-text"></i>创建病历</a>
+            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                <li><a href="/addmedical">添加病历</a></li>
+                <li><a href="/addfacing">添加牙套</a></li>
+            </ul>
+        </li>
+        <li> <a href="/fankuilook"> <i class="icon-mail"></i>反馈信息 </a></li>
+
+</nav>

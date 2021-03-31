@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<%- include ../Docpublic/head.ejs %>
+<body>
+<div class="page">
+    <!--头部导航栏-->
+    <%- include ../Docpublic/header.ejs %>
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 侧边栏 -->
+        <%- include ../Docpublic/side.ejs %>
+        <div class="content-inner">
+            <!--页面标题-->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">预约</h2>
+                </div>
+            </header>
+            <div class="breadcrumb-holder container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">首页</a></li>
+                    <li class="breadcrumb-item active">今日患者</li>
+                </ul>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-6 container-fluid" style="margin-top: 20px">
+
+                    <!--今日预约患者-->
+
+                        <div class="articles card">
+                            <div class="card-header d-flex align-items-center">
+                                <h2 class="h3">今日预约患者</h2>
+                            </div>
+                            <div class="card-body no-padding">
+                                <%today.forEach(today=>{%>
+                                <div class="item d-flex align-items-center">
+                                    <div class="image"><img src="<%=today.PatUser.Pic%>" alt="..." class="img-fluid rounded-circle"></div>
+                                    <div class="text"><a href="#">
+                                            <h3 class="h5"><%=today.PatUser.Name%></h3></a><small>邮箱：<%=today.PatUser.Email%> </small><small>主治医生ID：<%=today.PatUser.id%></small><small>主治医生姓名：<%=today.DocUser.Name%></small>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+
+                    <!--我的患者-->
+
+                        <div class="articles card">
+                            <div class="card-header d-flex align-items-center">
+                                <h2 class="h3">我的患者</h2>
+                            </div>
+                            <div class="card-body no-padding">
+                                <%patlist.forEach(patlist=>{%>
+                                <div class="item d-flex align-items-center">
+                                    <div class="image"><img src="<%=patlist.Pic%>" alt="..." class="img-fluid rounded-circle"></div>
+                                    <div class="text"><a href="#">
+                                            <h3 class="h5"><%=patlist.Name%></h3></a><small>邮箱：<%=patlist.Email%></small></div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+
+
+                </div>
+
+                <!--全部患者-->
+                <div class="col-md-6 container-fluid" style="margin-top: 20px;">
+                    <div class="articles card">
+                        <div class="card-header d-flex align-items-center">
+                            <h2 class="h3">全部患者</h2>
+                        </div>
+                        <div class="card-body no-padding">
+                            <% allpat.forEach(allpat=>{ %>
+                            <div class="item d-flex align-items-center">
+                                <div class="image"><img src="<%=allpat.Pic%>" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="text"><a href="#">
+                                        <h3 class="h5"><%=allpat.Name%></h3></a><small>邮箱：<%=allpat.Email%> </small><small>主治医生ID：<%=allpat.DocUserId%></small></div>
+                            </div>
+                            <%})%>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 页脚 -->
+            <%- include ../Docpublic/footer.ejs %>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- JavaScript files-->
+<%- include ../Docpublic/js.ejs %>
+
+</body>
+</html>
